@@ -1,0 +1,98 @@
+import java.util.HashSet;
+import java.util.Set;
+
+public class CombinationsOfString {
+	public static Set<String> set = new HashSet<String>();
+	//Function for swapping the characters at position I with character at position j  
+    public static String swapString(String a, int i, int j) {  
+        char[] b =a.toCharArray();  
+        char ch;
+        ch = b[i];  
+        b[i] = b[j];  
+        b[j] = ch;
+        return String.valueOf(b);  
+    }
+    //Function for generating different combinations of the string  
+    public static void letterCombinationtions(String str, int start, int end)  
+    {  
+        //To print the letter combinations  
+        if (start == end-1)
+        {	
+        //System.out.println(str);
+        set.add(str);
+        }
+        else  
+        {  
+            for (int i = start; i < end; i++)  
+            {  
+                //Swapping the string by fixing a character  
+                str = swapString(str,start,i);  
+                //Recursively calling function letterCombinationtions() for rest of the characters   
+                letterCombinationtions(str,start+1,end);  
+                //Swapping the characters back again.  
+                str = swapString(str,start,i);  
+            }  
+        }	
+    }  
+      
+    public static void main(String[] args)  
+    {  
+        String str = "WORK";
+        String sb = null;
+        System.out.println("Possible combinations of letters for string are: ");
+        
+        for (int i = 0; i < str.length()-1; i++) 
+        { 
+        	int k = i;
+        	for (int j = k+1; j < str.length(); j++)
+        	{
+        		if (str.charAt(i) != str.charAt(j))
+				{
+		        	sb = new StringBuilder().append(str.charAt(i)).append(str.charAt(j)).toString();
+			        int len = sb.length();    
+			        letterCombinationtions(sb, 0, len);
+				}    
+	        }
+        }
+
+        for (int i = 0; i < str.length()-1; i++)  
+        { 
+        	int k = i;
+        	for (int j = k+1; j < str.length(); j++)
+        	{
+        		for (int l = k+2; l < str.length(); l++)
+            	{
+        			if ((str.charAt(i) != str.charAt(j)) && (str.charAt(j) != str.charAt(l)) && (str.charAt(i) != str.charAt(l)))
+				    {
+	        			sb = new StringBuilder().append(str.charAt(i)).append(str.charAt(j)).append(str.charAt(l)).toString();
+	        			int len = sb.length();    
+	        			letterCombinationtions(sb, 0, len);
+				    }	
+    	        }
+            }
+        }
+
+        for (int i = 0; i < str.length()-1; i++)  
+        { 
+        	int k = i;
+        	for (int j = k+1; j < str.length(); j++)
+        	{
+        		for (int l = k+2; l < str.length(); l++)
+            	{
+        			for (int m = k+3; m < str.length(); m++)
+                	{
+        				if ((str.charAt(i) != str.charAt(j)) && (str.charAt(j) != str.charAt(l)) && (str.charAt(l) != str.charAt(m))
+        					&& (str.charAt(i) != str.charAt(m))	&& (str.charAt(j) != str.charAt(m)) && (str.charAt(l) != str.charAt(i)))
+    				    {
+		        			sb = new StringBuilder().append(str.charAt(i)).append(str.charAt(j)).append(str.charAt(l)).append(str.charAt(m)).toString();
+		        			int len = sb.length();    
+		        			letterCombinationtions(sb, 0, len);
+    				    }
+                	}
+    	        }
+            }
+        }
+        System.out.println(set);
+    }  
+
+}
